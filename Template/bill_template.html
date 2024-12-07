@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Bill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            text-align: center;
+            padding: 10px 0;
+            border-bottom: 2px solid #007bff;
+        }
+        h1 {
+            color: #007bff;
+        }
+        .order-info {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #dddddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tfoot td {
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Order Bill</h1>
+            <p>Thank you for your purchase!</p>
+        </header>
+        <div class="order-info">
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ order.item.Item_name }}</td> <!-- Assuming Item_name is the name of the item -->
+                    <td>{{ order.quantity }}</td>
+                    <td>RS. {{ order.total_price }}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" style="text-align: right;">Grand Total:</td>
+                    <td>RS. {{ order.total_price }}</td> <!-- Display the total price again -->
+                </tr>
+            </tfoot>
+        </table>
+        <footer>
+            <p>For any queries, please contact us at bugerheaven@gmail.com</p>
+            <p>&copy; {{ current_year }} Burger Heaven. All rights reserved.</p> <!-- You can dynamically insert the current year if needed -->
+        </footer>
+    </div>
+</body>
+</html>

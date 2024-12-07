@@ -1,0 +1,77 @@
+{% extends "main.html" %}
+{% load static %}
+{% block class %}class="sub_page"{% endblock class %}
+{% block main %}
+
+  <!-- food section -->
+
+  <section class="food_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>Our Menu</h2>
+      </div>
+  
+      <ul class="filters_menu">
+        <li class="{% if not request.GET.category %}active{% endif %}">
+          <a href="?">All</a>
+        </li>
+        {% for category in categories %}
+        <li class="{% if request.GET.category == category.Category_name %}active{% endif %}">
+          <a href="?category={{ category.Category_name }}">{{ category.Category_name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+  
+      <div class="filters-content">
+        <div class="row grid">
+          {% for item in page_obj %}
+          <div class="col-sm-6 col-lg-4 all {{ item.Category.Category_name }}">
+            <div class="box">
+              <a href="{% url 'productdetail' item.id %}" style="text-decoration: none; color: inherit;">
+                <div class="img-box">
+                  <img src="{{ item.Image.url }}" alt="{{ item.Item_name }}">
+                </div>
+                <div class="detail-box">
+                  <h5>{{ item.Item_name }}</h5>
+                  <div class="options">
+                    <h6>Rs. {{ item.Price }}</h6>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+  
+      <!-- Pagination Buttons -->
+      <div class="btn-box">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="btn">
+         <- Previous
+        </a>
+        {% endif %}
+        
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}" class="btn">
+          Next ->
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    var $grid = $('.grid').isotope({
+    itemSelector: '.all',
+    layoutMode: 'fitRows',
+});
+
+$('.filters_menu li').click(function(){
+    var filterValue = $(this).attr('data-filter');
+    $grid.isotope({ filter: filterValue });
+});
+</script>
+  <!-- end food section -->
+
+{% endblock main %}
